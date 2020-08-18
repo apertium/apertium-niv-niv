@@ -4,10 +4,15 @@
 
 LANG1=niv
 LANG2=niv
-PREFIX1=$(LANG1)-$(LANG2)
-PREFIX2=$(LANG2)-$(LANG1)
+VARIETY1=Amur
+VARIETY2=Sakh
+LANG1VARIETY1=$(LANG1)@$(VARIETY1)
+LANG2VARIETY2=$(LANG2)@$(VARIETY2)
+PREFIX=$(LANG1)-$(LANG2)
+PREFIX1=$(LANG1VARIETY1)-$(LANG2VARIETY2)
+PREFIX2=$(LANG2VARIETY2)-$(LANG1VARIETY1)
 
-BASENAME=apertium-$(PREFIX1)
+BASENAME=apertium-$(PREFIX)
 
 TARGETS_COMMON =		\
 	$(PREFIX1).automorf.bin	\
@@ -39,39 +44,39 @@ TARGETS_COMMON =		\
 ###############################################################################
 
 # -------------------
-# niv analysis:
+# niv@Amur analysis:
 # -------------------
 
-.deps/$(LANG1).automorf.bin: $(AP_SRC1)/$(LANG1).automorf.bin .deps/.d
+.deps/$(LANG1VARIETY1).automorf.bin: $(AP_SRC1)/$(LANG1VARIETY1).automorf.bin .deps/.d
 	cp $< $@
 
-$(PREFIX1).automorf.bin: .deps/$(LANG1).automorf.bin $(PREFIX1).autobil.bin
+$(PREFIX1).automorf.bin: .deps/$(LANG1VARIETY1).automorf.bin $(PREFIX1).autobil.bin
 	lt-trim $^ $@
 
-# -------------------
-# niv generation:
+# ---------------------
+# niv@Amur generation:
 # ---------------------
 
 
-$(PREFIX2).autogen.bin: $(AP_SRC1)/$(LANG1).autogen.bin
+$(PREFIX2).autogen.bin: $(AP_SRC1)/$(LANG1VARIETY1).autogen.bin
 	cp $< $@
 
 # -------------------
-# niv analysis:
+# niv@Sakh analysis:
 # -------------------
 
-.deps/$(LANG2).automorf.bin: $(AP_SRC2)/$(LANG2).automorf.bin .deps/.d
+.deps/$(LANG2VARIETY2).automorf.bin: $(AP_SRC2)/$(LANG2VARIETY2).automorf.bin .deps/.d
 	cp $< $@
 
-$(PREFIX2).automorf.bin: .deps/$(LANG2).automorf.bin $(PREFIX2).autobil.bin
+$(PREFIX2).automorf.bin: .deps/$(LANG2VARIETY2).automorf.bin $(PREFIX2).autobil.bin
 	lt-trim $^ $@
 
-# -------------------
-# niv generation:
+# ---------------------
+# niv@Sakh generation:
 # ---------------------
 
 
-$(PREFIX1).autogen.bin: $(AP_SRC2)/$(LANG2).autogen.bin
+$(PREFIX1).autogen.bin: $(AP_SRC2)/$(LANG2VARIETY2).autogen.bin
 	cp $< $@
 
 ###############################################################################
@@ -192,8 +197,8 @@ apertium_niv_niv_DATA=	\
 
 # All modes are created by the same goal, listing several will just give problems with make -j2
 noinst_DATA=modes/$(PREFIX1).mode \
-	.deps/$(LANG1).automorf.bin \
-	.deps/$(LANG2).automorf.bin
+	.deps/$(LANG1VARIETY1).automorf.bin \
+	.deps/$(LANG2VARIETY2).automorf.bin
 
 install-data-local: install-modes
 
