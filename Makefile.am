@@ -16,21 +16,25 @@ BASENAME=apertium-$(PREFIX)
 
 TARGETS_COMMON =		\
 	$(PREFIX1).automorf.bin	\
+	$(PREFIX1).automorf.hfst	\
 	$(PREFIX1).prob		\
 	$(PREFIX1).rlx.bin	\
 	$(PREFIX1).autobil.bin	\
 	$(PREFIX1).autolex.bin	\
 	$(PREFIX1).autogen.bin	\
+	$(PREFIX1).autogen.hfst	\
 	$(PREFIX1).autopgen.bin	\
 	$(PREFIX1).t1x.bin	\
 	$(PREFIX1).t2x.bin	\
 	$(PREFIX1).t3x.bin	\
 	$(PREFIX2).automorf.bin	\
+	$(PREFIX2).automorf.hfst	\
 	$(PREFIX2).prob		\
 	$(PREFIX2).rlx.bin	\
 	$(PREFIX2).autobil.bin	\
 	$(PREFIX2).autolex.bin	\
 	$(PREFIX2).autogen.bin	\
+	$(PREFIX2).autogen.hfst	\
 	$(PREFIX2).autopgen.bin	\
 	$(PREFIX2).t1x.bin	\
 	$(PREFIX2).t2x.bin	\
@@ -50,8 +54,14 @@ TARGETS_COMMON =		\
 .deps/$(LANG1VARIETY1).automorf.bin: $(AP_SRC1)/$(LANG1VARIETY1).automorf.bin .deps/.d
 	cp $< $@
 
+.deps/$(LANG1VARIETY1).automorf.hfst: $(AP_SRC1)/$(LANG1VARIETY1).automorf.hfst .deps/.d
+	cp $< $@
+
 $(PREFIX1).automorf.bin: .deps/$(LANG1VARIETY1).automorf.bin $(PREFIX1).autobil.bin
 	lt-trim $^ $@
+
+$(PREFIX1).automorf.hfst: .deps/$(LANG1VARIETY1).automorf.hfst
+	cp $< $@
 
 # ---------------------
 # niv@Amur generation:
@@ -61,15 +71,25 @@ $(PREFIX1).automorf.bin: .deps/$(LANG1VARIETY1).automorf.bin $(PREFIX1).autobil.
 $(PREFIX2).autogen.bin: $(AP_SRC1)/$(LANG1VARIETY1).autogen.bin
 	cp $< $@
 
+$(PREFIX2).autogen.hfst: $(AP_SRC1)/$(LANG1VARIETY1).autogen.hfst
+	cp $< $@
+
+
 # -------------------
 # niv@Sakh analysis:
 # -------------------
 
 .deps/$(LANG2VARIETY2).automorf.bin: $(AP_SRC2)/$(LANG2VARIETY2).automorf.bin .deps/.d
+
+.deps/$(LANG2VARIETY2).automorf.hfst: $(AP_SRC2)/$(LANG2VARIETY2).automorf.bin .deps/.d
 	cp $< $@
 
 $(PREFIX2).automorf.bin: .deps/$(LANG2VARIETY2).automorf.bin $(PREFIX2).autobil.bin
 	lt-trim $^ $@
+
+$(PREFIX2).automorf.hfst: .deps/$(LANG2VARIETY2).automorf.hfst
+	cp $< $@
+
 
 # ---------------------
 # niv@Sakh generation:
@@ -78,6 +98,10 @@ $(PREFIX2).automorf.bin: .deps/$(LANG2VARIETY2).automorf.bin $(PREFIX2).autobil.
 
 $(PREFIX1).autogen.bin: $(AP_SRC2)/$(LANG2VARIETY2).autogen.bin
 	cp $< $@
+
+$(PREFIX1).autogen.hfst: $(AP_SRC2)/$(LANG2VARIETY2).autogen.hfst
+	cp $< $@
+
 
 ###############################################################################
 ## Tagger models
