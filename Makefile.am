@@ -80,8 +80,9 @@ $(PREFIX2).autogen.hfst: $(AP_SRC1)/$(LANG1VARIETY1).autogen.hfst
 # -------------------
 
 .deps/$(LANG2VARIETY2).automorf.bin: $(AP_SRC2)/$(LANG2VARIETY2).automorf.bin .deps/.d
+	cp $< $@
 
-.deps/$(LANG2VARIETY2).automorf.hfst: $(AP_SRC2)/$(LANG2VARIETY2).automorf.bin .deps/.d
+.deps/$(LANG2VARIETY2).automorf.hfst: $(AP_SRC2)/$(LANG2VARIETY2).automorf.hfst .deps/.d
 	cp $< $@
 
 $(PREFIX2).automorf.bin: .deps/$(LANG2VARIETY2).automorf.bin $(PREFIX2).autobil.bin
